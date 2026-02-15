@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuneHub | Minimalist Typing Test</title>
+    <meta name="description"
+        content="Improve your typing speed with TuneHub. A minimalist, dark-themed typing test featuring coding practice, custom modes, and real-time statistics.">
+    <meta name="keywords"
+        content="typing test, speed typing, coding practice, wpm test, improve typing speed, minimalist typing test">
+    <meta name="author" content="Ravi Singh">
+    <link rel="canonical" href="https://tunehub.app/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tunehub.app/">
+    <meta property="og:title" content="TuneHub | Minimalist Typing Test">
+    <meta property="og:description"
+        content="Improve your typing speed with TuneHub. A minimalist, dark-themed typing test featuring coding practice, custom modes, and real-time statistics.">
+    <meta property="og:image" content="https://tunehub.app/assets/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tunehub.app/">
+    <meta property="twitter:title" content="TuneHub | Minimalist Typing Test">
+    <meta property="twitter:description"
+        content="Improve your typing speed with TuneHub. A minimalist, dark-themed typing test featuring coding practice, custom modes, and real-time statistics.">
+    <meta property="twitter:image" content="https://tunehub.app/assets/og-image.jpg">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/jpeg" href="assets/icons/logo.jpg">
+    <script src="codeSnippets.js"></script>
+    <script src="seo.js"></script>
+</head>
+
+<body data-theme="dark">
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="logo-animated">
+                <div class="logo-letter">T</div>
+                <div class="logo-letter">u</div>
+                <div class="logo-letter">n</div>
+                <div class="logo-letter">e</div>
+                <div class="logo-letter">H</div>
+                <div class="logo-letter">u</div>
+                <div class="logo-letter">b</div>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container" id="mainContainer">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-keyboard"></i>
+                    <span class="logo-text">tunehub</span>
+                </a>
+                <div class="header-nav">
+                    <button class="nav-icon-btn" id="infoBtn" title="Test Info">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <button class="nav-icon-btn" id="settingsBtn" title="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button class="icon-btn" id="themeToggle">
+                    <i class="fas fa-palette"></i>
+                </button>
+                <button class="icon-btn" data-page="account">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Info Modal -->
+        <div class="modal-overlay" id="infoModal">
+            <div class="modal-panel info-panel">
+                <div class="modal-header">
+                    <h3><i class="fas fa-info-circle"></i> Test Info</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <section>
+                        <h4>WPM Calculation</h4>
+                        <p>Words Per Minute (WPM) is calculated by taking the total number of characters typed divided
+                            by 5 (standard word length), then divided by the time in minutes.</p>
+                    </section>
+                    <section>
+                        <h4>Accuracy</h4>
+                        <p>Accuracy is the percentage of correct characters out of the total characters typed.</p>
+                    </section>
+                    <section>
+                        <h4>Keyboard Shortcuts</h4>
+                        <ul class="shortcuts-list">
+                            <li><kbd>Tab</kbd> <span>Restart Test</span></li>
+                            <li><kbd>Esc</kbd> <span>Pause / Resume</span></li>
+                            <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> <span>Toggle Theme</span></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4>Typing Tips</h4>
+                        <ul>
+                            <li>Keep your wrists slightly elevated.</li>
+                            <li>Focus on accuracy first; speed will follow.</li>
+                            <li>Don't look at the keyboard!</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div class="modal-overlay" id="settingsModal">
+            <div class="modal-panel settings-panel">
+                <div class="modal-header">
+                    <h3><i class="fas fa-cog"></i> Settings</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="settings-section">
+                        <h4>Appearance</h4>
+                        <div class="setting-item">
+                            <span>Font Size</span>
+                            <select id="fontSizeSetting">
+                                <option value="16px">Small</option>
+                                <option value="24px">Medium</option>
+                                <option value="32px" selected>Large</option>
+                                <option value="40px">Extra Large</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <span>Caret Style</span>
+                            <select id="caretStyleSetting">
+                                <option value="line">Line</option>
+                                <option value="block">Block</option>
+                                <option value="underline">Underline</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h4>Behavior</h4>
+                        <label class="toggle-setting">
+                            <span>Strict Mode</span>
+                            <input type="checkbox" id="strictModeSetting">
+                            <span class="slider"></span>
+                        </label>
+                        <label class="toggle-setting">
+                            <span>Live WPM</span>
+                            <input type="checkbox" id="liveWpmSetting" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="settings-section">
+                        <h4>Sound</h4>
+                        <label class="toggle-setting">
+                            <span>Master Sound</span>
+                            <input type="checkbox" id="masterSoundSetting" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Test Page -->
+            <div class="page active" id="pageTest">
+                <div class="test-container">
+                    <!-- Test Config -->
+                    <div class="test-config">
+                        <!-- Mode Selector -->
+                        <div class="config-group">
+                            <button class="config-btn mode-btn" data-mode="quote">
+                                <i class="fas fa-quote-right"></i>
+                                <span>quote</span>
+                            </button>
+                            <button class="config-btn mode-btn" data-mode="custom" id="customTestBtn">
+                                <i class="fas fa-sliders-h"></i>
+                                <span>custom</span>
+                            </button>
+                            <button class="config-btn mode-btn" data-mode="code">
+                                <i class="fas fa-code"></i>
+                                <span>code</span>
+                            </button>
+                        </div>
+
+                        <!-- Code Mode Options (hidden by default) -->
+                        <div class="code-options" id="codeOptions" style="display: none;">
+                            <div class="config-group">
+                                <button class="config-btn lang-btn active" data-lang="javascript">js</button>
+                                <button class="config-btn lang-btn" data-lang="html">html</button>
+                                <button class="config-btn lang-btn" data-lang="css">css</button>
+                                <button class="config-btn lang-btn" data-lang="jsx">jsx</button>
+                                <button class="config-btn lang-btn" data-lang="typescript">ts</button>
+                                <button class="config-btn lang-btn" data-lang="python">python</button>
+                            </div>
+                            <div class="config-group">
+                                <button class="config-btn level-btn active" data-level="basic">basic</button>
+                                <button class="config-btn level-btn" data-level="intermediate">intermediate</button>
+                                <button class="config-btn level-btn" data-level="advanced">advanced</button>
+                            </div>
+                        </div>
+
+                        <!-- Time Selector -->
+                        <div class="config-group">
+                            <button class="config-btn active" data-time="15">15</button>
+                            <button class="config-btn" data-time="30">30</button>
+                            <button class="config-btn" data-time="60">60</button>
+                            <button class="config-btn" data-time="120">120</button>
+                        </div>
+                    </div>
+
+                    <!-- Test Stats -->
+                    <div class="test-stats">
+                        <div class="stats-container">
+                            <div class="stat">
+                                <div class="stat-label">wpm</div>
+                                <div class="stat-value" id="wpmStat">0</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">acc</div>
+                                <div class="stat-value" id="accStat">100%</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">time</div>
+                                <div class="stat-value" id="timeStat">15</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">combo</div>
+                                <div class="stat-value" id="comboStat">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Words Container -->
+                    <div class="words-container">
+                        <div class="words-wrapper" id="wordsWrapper">
+                            <!-- Words are generated by JavaScript -->
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="text" class="words-input" id="wordsInput" autocomplete="off" autocorrect="off"
+                                autocapitalize="off" spellcheck="false">
+                            <div class="caret" id="caret"></div>
+                        </div>
+                        <div class="combo-display" id="comboDisplay">
+                            <span class="combo-text">COMBO</span>
+                            <span class="combo-count">0</span>
+                            <div class="combo-bar"></div>
+                        </div>
+                    </div>
+
+                    <!-- Test Controls -->
+                    <div class="test-controls">
+                        <button class="control-btn" id="restartBtn">
+                            <i class="fas fa-redo"></i>
+                            <span>restart test</span>
+                            <kbd>tab</kbd>
+                        </button>
+                        <button class="control-btn primary" id="startBtn">
+                            <i class="fas fa-play"></i>
+                            <span>start test</span>
+                        </button>
+                        <button class="control-btn" id="pauseBtn" style="display: none;">
+                            <i class="fas fa-pause"></i>
+                            <span>pause test</span>
+                            <kbd>esc</kbd>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Page -->
+            <div class="page" id="pageAbout">
+                <div class="about-container">
+                    <h2>About TuneHub</h2>
+                    <div class="about-content">
+                        <p>TuneHub is a minimalistic typing test website. It features many test modes, an account system
+                            to save your typing speed history, and user-configurable features such as themes, sounds,
+                            and more.</p>
+                        <p>It is designed to be simple, clean, and distraction-free. The site is open source and can be
+                            found on GitHub.</p>
+                        <div class="features-grid">
+                            <div class="feature">
+                                <i class="fas fa-bolt"></i>
+                                <h3>Fast</h3>
+                                <p>Lightweight and responsive</p>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-palette"></i>
+                                <h3>Themes</h3>
+                                <p>Multiple color themes</p>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-chart-line"></i>
+                                <h3>Stats</h3>
+                                <p>Track your progress</p>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-music"></i>
+                                <h3>Sounds</h3>
+                                <p>Audio feedback</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div class="page" id="pageSettings">
+                <div class="settings-container">
+                    <h2>Settings</h2>
+                    <div class="settings-grid">
+                        <!-- Theme Settings -->
+                        <div class="settings-group">
+                            <h3>Theme</h3>
+                            <div class="theme-selector">
+                                <div class="theme-option active" data-theme="dark">
+                                    <div class="theme-preview dark"></div>
+                                    <span>Dark</span>
+                                </div>
+                                <div class="theme-option" data-theme="light">
+                                    <div class="theme-preview light"></div>
+                                    <span>Light</span>
+                                </div>
+                                <div class="theme-option" data-theme="ocean">
+                                    <div class="theme-preview ocean"></div>
+                                    <span>Ocean</span>
+                                </div>
+                                <div class="theme-option" data-theme="forest">
+                                    <div class="theme-preview forest"></div>
+                                    <span>Forest</span>
+                                </div>
+                                <div class="theme-option" data-theme="royal">
+                                    <div class="theme-preview royal"></div>
+                                    <span>Royal</span>
+                                </div>
+                                <div class="theme-option" data-theme="crimson">
+                                    <div class="theme-preview crimson"></div>
+                                    <span>Crimson</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sound Settings -->
+                        <div class="settings-group">
+                            <h3>Sound</h3>
+                            <div class="toggle-group">
+                                <label class="toggle">
+                                    <input type="checkbox" id="soundToggleSetting" checked>
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-label">Enable sound</span>
+                                </label>
+                                <label class="toggle">
+                                    <input type="checkbox" id="clickSoundToggle" checked>
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-label">Click sound</span>
+                                </label>
+                                <label class="toggle">
+                                    <input type="checkbox" id="errorSoundToggle" checked>
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-label">Error sound</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Typing Settings -->
+                        <div class="settings-group">
+                            <h3>Typing</h3>
+                            <div class="toggle-group">
+                                <label class="toggle">
+                                    <input type="checkbox" id="showLiveWpm" checked>
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-label">Live WPM</span>
+                                </label>
+                                <label class="toggle">
+                                    <input type="checkbox" id="showAcc" checked>
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-label">Show accuracy</span>
+                                </label>
+                                <label class="toggle">
+                                    <input type="checkbox" id="showTimer" checked>
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-label">Show timer</span>
+                                </label>
+                                <label class="toggle">
+                                    <input type="checkbox" id="smoothCaret" checked>
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-label">Smooth caret</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Difficulty Settings -->
+                        <div class="settings-group">
+                            <h3>Difficulty</h3>
+                            <div class="slider-group">
+                                <label for="wordCountSlider">Words per test</label>
+                                <input type="range" id="wordCountSlider" min="10" max="200" value="50" class="slider">
+                                <div class="slider-value" id="wordCountValue">50</div>
+                            </div>
+                            <div class="slider-group">
+                                <label for="comboThreshold">Combo threshold</label>
+                                <input type="range" id="comboThreshold" min="5" max="50" value="10" class="slider">
+                                <div class="slider-value" id="comboThresholdValue">10</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Page -->
+            <div class="page" id="pageAccount">
+                <div class="account-container">
+                    <div class="account-header">
+                        <button class="back-btn" onclick="window.tunehub.showPage('test')" title="Back to Home">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+
+                    <div class="auth-container">
+                        <!-- Register Section -->
+                        <div class="auth-half register-half">
+                            <div class="auth-header">
+                                <i class="fas fa-user-plus"></i> register
+                            </div>
+                            <form id="registerForm" class="auth-form"
+                                onsubmit="event.preventDefault(); window.tunehub.handleRegister(event);">
+                                <div class="form-group">
+                                    <input type="text" id="reg-username" placeholder="username" autocomplete="off"
+                                        aria-label="Username">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" id="reg-email" placeholder="email" autocomplete="off"
+                                        aria-label="Email">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" id="reg-verify-email" placeholder="verify email"
+                                        autocomplete="off" aria-label="Verify Email">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="reg-password" placeholder="password"
+                                        autocomplete="new-password" aria-label="Password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="reg-verify-password" placeholder="verify password"
+                                        autocomplete="new-password" aria-label="Verify Password">
+                                </div>
+                                <button type="submit" class="auth-btn" aria-label="Sign Up">
+                                    <i class="fas fa-user-plus"></i> sign up
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Login Section -->
+                        <div class="auth-half login-half">
+                            <div class="auth-header">
+                                <i class="fas fa-sign-in-alt"></i> login
+                            </div>
+
+                            <div class="social-login">
+                                <button class="social-btn google" type="button" aria-label="Login with Google">
+                                    <i class="fab fa-google"></i>
+                                </button>
+                                <button class="social-btn github" type="button" aria-label="Login with GitHub">
+                                    <i class="fab fa-github"></i>
+                                </button>
+                            </div>
+
+                            <div class="divider">or</div>
+
+                            <form id="loginFormNew" class="auth-form"
+                                onsubmit="event.preventDefault(); window.tunehub.handleLogin(event);">
+                                <div class="form-group">
+                                    <input type="email" id="login-email" placeholder="email" autocomplete="username"
+                                        aria-label="Email">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="login-password" placeholder="password"
+                                        autocomplete="current-password" aria-label="Password">
+                                </div>
+
+                                <div class="form-options">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="remember-me">
+                                        <span class="checkmark"></span>
+                                        remember me
+                                    </label>
+                                </div>
+
+                                <button type="submit" class="auth-btn" aria-label="Sign In">
+                                    <i class="fas fa-sign-in-alt"></i> sign in
+                                </button>
+
+                                <a href="#" class="forgot-password">forgot password?</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" class="footer-link">GitHub</a>
+                <a href="#" class="footer-link">Discord</a>
+                <a href="#" class="footer-link">Twitter</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+            <div class="footer-info">
+                <span>Made <i class="fas fa-heart"></i> By Ravi Singh</span>
+                <span class="version">v1.0.0</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Result Modal -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Test Complete!</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="result-stats">
+                    <div class="result-stat">
+                        <div class="result-value" id="resultWpm">0</div>
+                        <div class="result-label">wpm</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-value" id="resultAcc">0%</div>
+                        <div class="result-label">accuracy</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-value" id="resultTime">0s</div>
+                        <div class="result-label">time</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-value" id="resultCombo">0</div>
+                        <div class="result-label">max combo</div>
+                    </div>
+                </div>
+                <div class="result-actions">
+                    <button class="btn" id="tryAgainBtn">Try Again</button>
+                    <button class="btn primary" id="shareResultBtn">Share Result</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
