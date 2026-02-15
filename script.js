@@ -58,7 +58,9 @@ class TuneHub {
 
     async checkAuth() {
         try {
-            const response = await fetch('/auth/me');
+            const response = await fetch('https://tunehub-backend-lrun.onrender.com/auth/me', {
+                credentials: 'include'
+            });
             if (response.ok) {
                 const data = await response.json();
                 if (data.user) {
