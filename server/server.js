@@ -217,14 +217,14 @@ if (!isDevMode) {
    ========================================== */
 app.get('/auth/me', (req, res) => {
     const token = req.cookies.token;
-    if (!token) return res.status(401).json({ user: null });
+    if (!token) return res.status(401).json({ message: "Unauthorized" });
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         res.json({ user: decoded }); // In real app, fetch fresh data from DB
     } catch (err) {
         res.clearCookie('token');
-        res.status(401).json({ user: null });
+        res.status(401).json({ message: "Unauthorized" });
     }
 });
 
