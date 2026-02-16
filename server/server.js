@@ -12,9 +12,9 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../'))); // Serve frontend files
+app.use(express.static(path.join(__dirname, '../')));
 app.use(cors({
-    origin: 'https://tunehub-typing.netlify.app',
+    origin: 'https://tunehub-typing.vercel.app',
     credentials: true
 }));
 
